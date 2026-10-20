@@ -5,6 +5,13 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
+// Debug log untuk troubleshooting env vars
+console.log("[Supabase] env loaded:", {
+  url: supabaseUrl ? supabaseUrl.substring(0, 40) + "..." : "(empty)",
+  key: supabaseKey ? supabaseKey.substring(0, 20) + "..." : "(empty)",
+  isConfigured: Boolean(supabaseUrl && supabaseKey),
+});
+
 if (!supabaseUrl || !supabaseKey) {
   console.warn(
     "[Supabase] Environment variable NEXT_PUBLIC_SUPABASE_URL atau NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY belum diset. " +

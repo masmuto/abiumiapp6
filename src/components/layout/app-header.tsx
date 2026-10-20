@@ -2,7 +2,7 @@
 'use client';
 import { useSession } from "@/lib/session-store";
 import { Button } from "@/components/ui/button";
-import { Wallet, LogOut, ChevronDown, Download, CheckCircle2, Share, Database } from "lucide-react";
+import { Wallet, LogOut, ChevronDown, Download, CheckCircle2, Share, Database, Tag } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import { colorClass } from "@/lib/format";
 import { MONTHS_ID } from "@/lib/constants";
 import { usePWAInstall } from "@/components/pwa/pwa-provider";
 import { BackupDialog } from "@/components/settings/backup-dialog";
+import { CategoriesDialog } from "@/components/categories/categories-panel";
 import { useState } from "react";
 import {
   Dialog,
@@ -38,6 +39,7 @@ export function AppHeader({
   const { canInstall, isInstalled, promptInstall } = usePWAInstall();
   const [showIosHelp, setShowIosHelp] = useState(false);
   const [showBackup, setShowBackup] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
 
   return (
     <>
@@ -141,6 +143,10 @@ export function AppHeader({
                     Panduan Pasang (HP)
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setShowCategories(true)}>
+                    <Tag className="w-4 h-4 mr-2" />
+                    Kelola Kategori
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShowBackup(true)}>
                     <Database className="w-4 h-4 mr-2" />
                     Cadangkan Data
@@ -245,6 +251,9 @@ export function AppHeader({
 
       {/* Dialog backup & restore data */}
       <BackupDialog open={showBackup} onOpenChange={setShowBackup} />
+
+      {/* Dialog kelola kategori (tambah/edit/hapus) */}
+      <CategoriesDialog open={showCategories} onOpenChange={setShowCategories} />
     </>
   );
 }

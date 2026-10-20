@@ -187,6 +187,19 @@ export function useDeleteCategory() {
   });
 }
 
+export function useUpdateCategory() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, ...body }: any) =>
+      postJSON(`/api/categories/${id}`, body, "PATCH"),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["categories"] });
+      toast.success("Kategori diperbarui");
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+}
+
 // ===== Budgets =====
 export function useBudgets(month?: number, year?: number) {
   const params = new URLSearchParams();

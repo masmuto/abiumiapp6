@@ -12,6 +12,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useGlobalRealtimeSync } from "@/hooks/use-realtime";
+import { useTransactionNotifications } from "@/hooks/use-notifications";
 
 // Type untuk beforeinstallprompt event
 interface BeforeInstallPromptEvent extends Event {
@@ -44,6 +45,10 @@ export function PWAProvider() {
   // === Realtime sync Supabase: live update antar perangkat ===
   // Saat Abi catat di HP-nya, Umi yang buka app di HP lain langsung lihat
   useGlobalRealtimeSync();
+
+  // === Notifikasi transaksi: show browser notif saat ada tx baru dari user lain ===
+  // Abi catat di HP-nya → Umi yang buka app di HP lain akan dapat notif
+  useTransactionNotifications();
 
   // === Register service worker ===
   useEffect(() => {

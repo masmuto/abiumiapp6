@@ -2,7 +2,7 @@
 'use client';
 import { useSession } from "@/lib/session-store";
 import { Button } from "@/components/ui/button";
-import { Wallet, LogOut, ChevronDown, Download, CheckCircle2, Share, Database, Tag } from "lucide-react";
+import { Wallet, LogOut, ChevronDown, Download, CheckCircle2, Share, Database, Tag, Bell } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +16,7 @@ import { MONTHS_ID } from "@/lib/constants";
 import { usePWAInstall } from "@/components/pwa/pwa-provider";
 import { BackupDialog } from "@/components/settings/backup-dialog";
 import { CategoriesDialog } from "@/components/categories/categories-panel";
+import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
 import { useState } from "react";
 import {
   Dialog,
@@ -40,6 +41,7 @@ export function AppHeader({
   const [showIosHelp, setShowIosHelp] = useState(false);
   const [showBackup, setShowBackup] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
 
   return (
     <>
@@ -146,6 +148,10 @@ export function AppHeader({
                   <DropdownMenuItem onClick={() => setShowCategories(true)}>
                     <Tag className="w-4 h-4 mr-2" />
                     Kelola Kategori
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowNotif(true)}>
+                    <Bell className="w-4 h-4 mr-2" />
+                    Pengaturan Notifikasi
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShowBackup(true)}>
                     <Database className="w-4 h-4 mr-2" />
@@ -254,6 +260,9 @@ export function AppHeader({
 
       {/* Dialog kelola kategori (tambah/edit/hapus) */}
       <CategoriesDialog open={showCategories} onOpenChange={setShowCategories} />
+
+      {/* Dialog pengaturan notifikasi */}
+      <NotificationsDialog open={showNotif} onOpenChange={setShowNotif} />
     </>
   );
 }

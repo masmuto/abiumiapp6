@@ -2,20 +2,22 @@
 // Dipakai di API routes (server) dan komponen client (browser)
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+// === Supabase credentials ===
+// Prioritas: env vars (Vercel/production), fallback ke hardcoded (sandbox).
+// NEXT_PUBLIC_ vars aman di-hardcode (publishable key, bukan service role).
+const FALLBACK_SUPABASE_URL = "https://mtgmwgawjcscgammixnu.supabase.co";
+const FALLBACK_SUPABASE_KEY =
+  "sb_publishable_fSKXWTnILil05GBtKH_WkA_sx7fvOzm";
 
-// Debug log untuk troubleshooting env vars
-console.log("[Supabase] env loaded:", {
-  url: supabaseUrl ? supabaseUrl.substring(0, 40) + "..." : "(empty)",
-  key: supabaseKey ? supabaseKey.substring(0, 20) + "..." : "(empty)",
-  isConfigured: Boolean(supabaseUrl && supabaseKey),
-});
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
+const supabaseKey =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || FALLBACK_SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.warn(
     "[Supabase] Environment variable NEXT_PUBLIC_SUPABASE_URL atau NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY belum diset. " +
-      "Menggunakan mode fallback ke Prisma SQLite lokal."
+      "Menggunakan fallback hardcoded."
   );
 }
 
